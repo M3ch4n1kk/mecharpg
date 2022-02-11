@@ -1,7 +1,9 @@
 # MechaRPG Repository
 My first text-based RPG game.
+
 ## How To Play
-Open the .py file
+>Open the .py file
+
 ## Requirements
 > Python 3.10
  
