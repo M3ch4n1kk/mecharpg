@@ -1,10 +1,10 @@
 # mecharpg
 My first text-based RPG game.
-# How To Play
+## How To Play
 Open the .py file
-# Requirements
+## Requirements
 Python 3.10
 ```
 Windows #
 pip install pygame
-´´´
+
