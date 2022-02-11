@@ -5,4 +5,4 @@ Open the .py file
 # Requirements
 Python 3.10
 ```Windows #
-pip install pygame
+```pip install pygame
