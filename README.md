@@ -2,7 +2,7 @@
 My first text-based RPG game.
 
 ## How To Play
->Open the .py file
+>Run the .py file after installing Python on your device
 
 ## Requirements
 > Python 3.10
