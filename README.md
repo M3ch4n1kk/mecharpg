@@ -1,4 +1,4 @@
-# mecharpg
+# MechaRPG Repository
 My first text-based RPG game.
 ## How To Play
 Open the .py file
