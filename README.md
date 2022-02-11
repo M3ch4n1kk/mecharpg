@@ -4,5 +4,7 @@ My first text-based RPG game.
 Open the .py file
 # Requirements
 Python 3.10
-```Windows #
-```pip install pygame
+```
+Windows #
+pip install pygame
+´´´
