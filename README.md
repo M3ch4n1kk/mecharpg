@@ -2,11 +2,10 @@
 My first text-based RPG game.
 
 ## How To Play
->Run the .py file after installing Python on your device
-
+> Run the executable. Ignore all warnings if they pop up.
+> To close a menu, press enter.
 ## Requirements
-> Python 3.10
- 
+
     # Windows
     pip install pygame
 
