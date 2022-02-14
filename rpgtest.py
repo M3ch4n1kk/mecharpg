@@ -18,14 +18,14 @@ e_info = ""
 enemyAlive = False
 block = False
 
-p_data = {"hp":100,"maxhp":100,"resistance":0,"strength":0,"xp":0,"lvl":1,"lvlnext":25,"pinespag":3,"explcard":3,"audio_music":50,"audio_sfx":50,"biome":0} # player save data
+p_data = {"hp":100,"maxhp":100,"resistance":1,"strength":1,"xp":0,"lvl":1,"lvlnext":25,"pinespag":3,"explcard":3,"audio_music":50,"audio_sfx":50,"biome":0} # player save data
 recovery_data = p_data
 
 
 pygame.init()
 pygame.mixer.init()
 damage_sound = pygame.mixer.Sound("media/damage.wav")
-damage_sound.set_volume(p_data["audio_sfx"]/100)
+damage_sound.set_volume(p_data["audio_sfx"]/200)
 
 
 def save(): # saves game data
@@ -34,9 +34,9 @@ def save(): # saves game data
 
 
 def load(): # loads game data on startup
+    global p_data
     data = open("data/playerdata.json", "r")
     p_data = json.load(data)
-
 
 def quit():
     clear()
@@ -62,7 +62,7 @@ def xpsystem():
     global p_data
     while p_data["xp"] >= p_data["lvlnext"]:
         p_data["lvl"] += 1
-        p_data["strength"] = round(p_data["strength"]*1.1)
+        p_data["strength"] *= 1.1
         p_data["maxhp"] = round(p_data["maxhp"]*1.1)
         p_data["xp"] -= p_data["lvlnext"]
         p_data["lvlnext"] = round(p_data["lvlnext"]*1.5)
@@ -130,6 +130,8 @@ def spawn():
                         p_data["hp"] -= dmg
                         if p_data["hp"]<0:
                             p_data["hp"] = 0
+                        sleep(0.5)
+                        damage_sound.play()
                         input(f"You took {dmg} damage!" + " {hp}/{maxhp}\n".format(**p_data))
                         block = False
                         if p_data["hp"]>0:
@@ -171,7 +173,7 @@ def action():
             action_block()
             isRunning = False
 
-        elif action.lower() == "info'" or action == "4":
+        elif action.lower() == "info" or action == "4":
             action_info()
 
         else:
@@ -181,7 +183,7 @@ def action_fight():
     global ehp,isRunning
     clear()
     input("You attacked the slime.")
-    dmg = math.trunc(random.randrange(120,150)+(p_data["strength"]))
+    dmg = math.trunc(random.randrange(80,100)*(p_data["strength"]))
     ehp -= dmg
 
     if ehp<0:
@@ -195,8 +197,8 @@ def action_fight():
 
     else:
         isRunning = False
-        p_data["xp"] += 100
-        input("You won! You gained 100 XP!")
+        p_data["xp"] += 50
+        input("You won! You gained 50 XP!")
         xpsystem()
 
 
@@ -207,13 +209,13 @@ def action_item():
     if item.lower() == "pinespag":
         if p_data["pinespag"]>0:
             p_data["pinespag"] -= 1
-            p_data["hp"] += 80
+            p_data["hp"] += 200
 
             if p_data["hp"]>p_data["maxhp"]:
                 p_data["hp"] = p_data["maxhp"]
 
             clear()
-            input("You ate Pineapple Spaghetti. You restored 80 health. {hp}/{maxhp}".format(**p_data))
+            input("You ate Pineapple Spaghetti. You recovered 200 HP. {hp}/{maxhp}".format(**p_data))
             if p_data["hp"] == p_data["maxhp"]:
                 input("Your health has been maxed out.\n")
                 isRunning = False
@@ -293,7 +295,7 @@ def menu_gui():
 
 
 def stat_gui():
-    input("\n--- Player Statistics ---\nHealth: {hp}/{maxhp}\nLevel: {lvl}\nExperience: {xp}\nNext Level: {lvlnext}\nResistance: ".format(**p_data) + str(p_data["resistance"]) +"\nStrength: " + str(p_data["strength"]) + "\n")
+    input("\n--- Player Statistics ---\nHealth: {hp}/{maxhp}\nLevel: {lvl}\nExperience: {xp}\nNext Level: {lvlnext}\nResistance: ".format(**p_data) + ((p_data["resistance"]-1)*10) +"\nStrength: " + ((p_data["strength"]-1)*10) + "\n")
 
 def inv_gui():
     input("\nPineSpag ({pinespag}) | ExplCard ({explcard}) > ".format(**p_data))
@@ -338,8 +340,8 @@ def savegame():
 # game start
 
 load()
-clear()
 xpsystem()
+clear()
 welcome = input("Welcome to M3ch4n1kk's RPG test v0.2.0(alpha)! Would you like to play? (y/n)\n")
 
 if welcome.lower() == "y":
